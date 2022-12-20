@@ -19,10 +19,11 @@ class App extends React.Component {
 
 
     cellClicked = (row, cell) => {
-        if (row === 0 && this.state.values[row][cell] !== '') {
+/*        alert("row: " + row + " cell: " + cell);*/
+        if (this.state.values[row][cell] !== '') {
             return
         }
-        const currentValues = this.state.values
+        const currentValues = this.state.values;
         const currentPlayer = this.state.player === "y" ? "r" : "y";
         while ((row !== 5) && this.state.values[row + 1][cell] !== "y" && this.state.values[row + 1][cell] !== "r") {
             row++
@@ -35,46 +36,39 @@ class App extends React.Component {
         this.checkWin(row,cell);
     }
 
+
     checkWin = (row, cell) => {
-        while (this.state.values[row][cell] === this.state.player || cell !== 0) {
-            console.log(cell)
-            cell--
+        let tempCell = cell;
+        let secondCell, thirdCell, fourthCell;
+        while (tempCell !== 0 && this.state.values[row][tempCell - 1] === this.state.player) {
+            tempCell--
         }
-        if (cell + 3 > 7) {
-            const secondCell = this.state.values[row][cell] === this.state.values[row][cell+1];
-            const thirdCell = this.state.values[row][cell] === this.state.values[row][cell+2];
-            const fourthCell = this.state.values[row][cell] === this.state.values[row][cell+3];
+        if (tempCell + 3 <= 6) {
+            secondCell = this.state.values[row][tempCell] === this.state.values[row][tempCell+1];
+            thirdCell = this.state.values[row][tempCell] === this.state.values[row][tempCell+2];
+            fourthCell = this.state.values[row][tempCell] === this.state.values[row][tempCell+3];
+            if (secondCell && thirdCell && fourthCell) {
+                alert(this.state.player + " won")
+            }
+        }
+
+        tempCell = cell;
+        let tempRow = row;
+
+        while (tempRow !== 0 && this.state.values[row + 1][cell] === this.state.player) {
+            console.log(tempRow)
+            tempRow--
+        }
+        if (tempRow + 3 <= 5) {
+            secondCell = this.state.values[tempRow][cell] === this.state.values[tempRow + 1][cell];
+            thirdCell = this.state.values[tempRow][cell] === this.state.values[tempRow + 2][cell];
+            fourthCell = this.state.values[tempRow][cell] === this.state.values[tempRow + 3][cell];
             if (secondCell && thirdCell && fourthCell) {
                 alert(this.state.player + " won")
             }
         }
 
 
-
-/*        const currentPlayer = this.state.player;
-        const currentValues = this.state.values;
-        let winningPoints = 1;
-        let tempRow = row;
-        let tempCell = cell;
-        while (this.state.values[tempRow][tempCell] === currentPlayer && tempCell >= 0) {
-            console.log(winningPoints)
-            if (winningPoints === 4) {
-                break
-            }
-            tempCell--
-            winningPoints += 1;
-        }
-        tempCell = cell;
-        while (this.state.values[tempRow][tempCell] === currentPlayer && tempCell <= 7) {
-            if (winningPoints === 4) {
-                break
-            }
-            tempCell++
-            winningPoints += 1;
-        }
-        if (winningPoints === 4) {
-            alert(this.state.player + " won")
-        }*/
     }
 
 
