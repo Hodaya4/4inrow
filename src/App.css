@@ -31,7 +31,10 @@ td {
   background-color: red;
 }
 
-/*
-.white {
-  background-color: white;
-}*/
+.noWinner{
+  visibility: hidden;
+}
+
+.winner {
+  visibility: visible;
+}
